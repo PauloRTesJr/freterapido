@@ -2,17 +2,19 @@
   <div class="card-header">
     {{ currency.name }}
   </div>
-  <div class="card-price">
-    {{ currency.value | currency : 'BRL' : 'symbol' : '1.2-2' }}
+  <div class="card-price" [class]="priceColor()">
+    {{ currency.value | brCurrency }}
   </div>
   <div class="card-infos">
-    <div class="infos-variation">
-      <p>Variação (%)</p>
-      <p>{{ currency.variation }}</p>
+    <div class="info">
+      <p class="info-label">Variação (%)</p>
+      <p class="info-description">{{ currency.variation }}</p>
     </div>
-    <div class="infos-updated-at">
-      <p>Atualizado</p>
-      <p>{{ currency.updateAt }}</p>
+    <div class="info">
+      <p class="info-label">Atualizado</p>
+      <p class="info-description">
+        {{ currency.updateAt | date : 'HH:mm:ss' }}
+      </p>
     </div>
   </div>
 </div>

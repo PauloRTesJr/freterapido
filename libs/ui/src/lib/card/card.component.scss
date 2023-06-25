@@ -6,6 +6,10 @@
   width: 430px;
   background-color: var(--card-background-color);
 
+  @media screen and (max-width:768px) {
+    width: 90vw;
+  }
+
   &-header {
     display: flex;
     justify-content: center;
@@ -22,7 +26,49 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.2rem;
-    padding: 2rem;
+    font-size: 2.5rem;
+    font-weight: bolder;
+    padding: 3rem 2rem;
+
+    &.green {
+      color: var(--text-green-color);
+    }
+
+    &.red {
+      color: var(--text-red-color);
+    }
+
+    &.blue {
+      color: var(--text-blue-color);
+    }
+  }
+
+  &-infos {
+    display: flex;
+    border-top: 0.5px solid var(--text-secondary-color);
+
+    .info {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 1rem;
+
+      &-label {
+        color: var(--text-secondary-color);
+        font-size: 1rem;
+      }
+
+      &-description {
+        color: var(--text-basic-color);
+        font-size: 1.2rem;
+        font-weight: bold;
+      }
+
+      &:first-child {
+        border-right: 0.5px solid var(--text-secondary-color);
+      }
+    }
   }
 }

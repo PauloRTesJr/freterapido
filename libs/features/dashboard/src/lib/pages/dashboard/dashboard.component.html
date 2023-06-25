@@ -1,1 +1,5 @@
-<freterapido-card [currency]="mockCurrency"></freterapido-card>
+<div class="container">
+  <ng-container *ngFor="let currency of arrayMock">
+    <freterapido-card [currency]="currency"></freterapido-card>
+  </ng-container>
+</div>

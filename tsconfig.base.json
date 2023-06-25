@@ -19,6 +19,7 @@
         "libs/features/dashboard/src/index.ts"
       ],
       "@freterapido/model": ["libs/model/src/index.ts"],
+      "@freterapido/pipes": ["libs/pipes/src/index.ts"],
       "@freterapido/ui": ["libs/ui/src/index.ts"]
     }
   },

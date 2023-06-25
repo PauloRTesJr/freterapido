@@ -9,4 +9,17 @@ import { Currency } from '@freterapido/model';
 export class CardComponent {
   @Input()
   currency!: Currency;
+
+  priceColor(): string {
+    const { value } = this.currency;
+    if (value < 1) {
+      return 'red';
+    }
+
+    if (value > 5) {
+      return 'blue';
+    }
+
+    return 'green';
+  }
 }
