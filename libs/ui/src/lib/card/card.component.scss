@@ -1,0 +1,28 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 15px;
+  width: 430px;
+  background-color: var(--card-background-color);
+
+  &-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: bolder;
+    padding: 1.5rem;
+    background-color: var(--card-header-background-color);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  }
+
+  &-price {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.2rem;
+    padding: 2rem;
+  }
+}

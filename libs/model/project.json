@@ -1,0 +1,17 @@
+{
+  "name": "model",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/model/src",
+  "prefix": "freterapido",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/model/**/*.ts", "libs/model/**/*.html"]
+      }
+    }
+  }
+}

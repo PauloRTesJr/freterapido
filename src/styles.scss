@@ -1,1 +1,30 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+}
+
+body {
+  font-family: 'Poppins', Arial, sans-serif;
+  list-style-type: none;
+  background-color: var(--app-background-color);
+  color: var(--text-basic-color);
+}
+
+:root {
+  --app-background-color: #eeeeee;
+  --header-background-color: #ffffff;
+  --card-header-background-color: #f6f6f6;
+  --card-background-color: #ffffff;
+  --button-background-color: #f4f4f4;
+  --text-basic-color: #717171;
+  --text-secondary-color: #919191;
+  --text-green-color: #3c7649;
+  --text-blue-color: #3684cb;
+  --text-red-color: #dd4b4b;
+}
