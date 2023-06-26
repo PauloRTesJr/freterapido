@@ -8,15 +8,21 @@ import { Currency } from '@freterapido/model';
 })
 export class CardComponent {
   @Input()
-  currency!: Currency;
+  title!: string;
+
+  @Input()
+  isLoading!: boolean;
+
+  @Input()
+  currency!: Currency | null;
 
   priceColor(): string {
-    const { value } = this.currency;
-    if (value < 1) {
+    const price = this.currency?.value ?? 0;
+    if (price < 1) {
       return 'red';
     }
 
-    if (value > 5) {
+    if (price > 5) {
       return 'blue';
     }
 

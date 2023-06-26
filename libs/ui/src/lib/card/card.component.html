@@ -1,20 +1,27 @@
 <div class="card">
   <div class="card-header">
-    {{ currency.name }}
+    {{ title }}
   </div>
-  <div class="card-price" [class]="priceColor()">
-    {{ currency.value | brCurrency }}
-  </div>
-  <div class="card-infos">
-    <div class="info">
-      <p class="info-label">Variação (%)</p>
-      <p class="info-description">{{ currency.variation }}</p>
+  <ng-container *ngIf="isLoading">
+    <div class="card-loading">
+      <img src="assets/loader.svg" alt="spinner" class="loading-spinner" />
     </div>
-    <div class="info">
-      <p class="info-label">Atualizado</p>
-      <p class="info-description">
-        {{ currency.updateAt | date : 'HH:mm:ss' }}
-      </p>
+  </ng-container>
+  <ng-container *ngIf="!isLoading && currency">
+    <div class="card-price" [class]="priceColor()">
+      {{ currency.value | brCurrency : 'R$' }}
     </div>
-  </div>
+    <div class="card-infos">
+      <div class="info">
+        <p class="info-label">Variação (%)</p>
+        <p class="info-description">{{ currency.variation | brCurrency }}</p>
+      </div>
+      <div class="info">
+        <p class="info-label">Atualizado</p>
+        <p class="info-description">
+          {{ currency.updateAt | date : 'HH:mm:ss' }}
+        </p>
+      </div>
+    </div>
+  </ng-container>
 </div>

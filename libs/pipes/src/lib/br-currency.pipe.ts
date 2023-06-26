@@ -4,10 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'brCurrency',
 })
 export class BrCurrencyPipe implements PipeTransform {
-  transform(value: number): string {
-    return value.toLocaleString('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    });
+  transform(value: number, symbol = ''): string {
+    return (symbol + Number(value).toFixed(2)).replace('.', ',');
   }
 }
