@@ -7,7 +7,15 @@
       <img src="assets/loader.svg" alt="spinner" class="loading-spinner" />
     </div>
   </ng-container>
-  <ng-container *ngIf="!isLoading && currency">
+  <ng-container *ngIf="!isLoading && isError">
+    <div class="card-error">
+      <p>Algo deu errado</p>
+      <freterapido-button (buttonClick)="onClick()"
+        >Recarregar</freterapido-button
+      >
+    </div>
+  </ng-container>
+  <ng-container *ngIf="!isLoading && !isError && currency">
     <div class="card-price" [class]="priceColor()">
       {{ currency.value | brCurrency : 'R$' }}
     </div>

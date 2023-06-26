@@ -1,5 +1,7 @@
 <freterapido-card
   [isLoading]="isLoading"
+  [isError]="isError"
   [title]="currencyName"
   [currency]="currency"
+  (cardClick)="onRefreshCard()"
 ></freterapido-card>

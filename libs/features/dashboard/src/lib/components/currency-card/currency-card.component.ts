@@ -1,4 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription, interval, take } from 'rxjs';
 import { CurrencyService } from '../../services/currency.service';
 import { Currency, CurrencyName, RequestCurrency } from '@freterapido/model';
 
@@ -7,15 +8,27 @@ import { Currency, CurrencyName, RequestCurrency } from '@freterapido/model';
   templateUrl: './currency-card.component.html',
   styleUrls: ['./currency-card.component.scss'],
 })
-export class CurrencyCardComponent implements OnInit {
+export class CurrencyCardComponent implements OnInit, OnDestroy {
   @Input()
   currencyCode!: string;
 
   currency: Currency | null = null;
 
   isLoading = false;
+  isError = false;
 
-  constructor(private currencyService: CurrencyService) {}
+  subscriptions: Subscription;
+
+  constructor(private currencyService: CurrencyService) {
+    this.subscriptions = interval(1000).subscribe(() => {
+      if (
+        this.currency &&
+        !this.currencyService.isValidCurrency(this.currency)
+      ) {
+        this.loadCurrency();
+      }
+    });
+  }
 
   get currencyName(): string {
     return CurrencyName[this.currencyCode];
@@ -23,22 +36,56 @@ export class CurrencyCardComponent implements OnInit {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.currencyService.loadCurrency(this.currencyCode).subscribe({
-      next: (data: RequestCurrency) => {
-        const requestData = data[this.currencyCode + 'BRL'];
-        console.log(requestData);
-        this.currency = {
-          name: this.currencyName,
-          value: requestData.bid,
-          updateAt: new Date(),
-          variation: requestData.varBid,
-        } as Currency;
-        this.isLoading = false;
-      },
-      error: (e) => {
-        this.isLoading = false;
-        console.error(e);
-      },
-    });
+    const cachedCurrency = this.currencyService.getCacheCurrency(
+      'currency-' + this.currencyCode
+    );
+
+    if (cachedCurrency) {
+      this.currency = cachedCurrency;
+      this.isLoading = false;
+    } else {
+      this.loadCurrency();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
+
+  loadCurrency() {
+    this.subscriptions.add(
+      this.currencyService
+        .loadCurrency(this.currencyCode)
+        .pipe(take(1))
+        .subscribe({
+          next: (data: RequestCurrency) => {
+            const requestData = data[this.currencyCode + 'BRL'];
+            console.log(requestData);
+            const newCurrency = {
+              name: this.currencyName,
+              value: requestData.bid,
+              updateAt: new Date(),
+              variation: requestData.varBid,
+            } as Currency;
+            this.currency = newCurrency;
+            this.currencyService.setCacheCurrency(
+              this.currencyCode,
+              newCurrency
+            );
+            this.isLoading = false;
+            this.isError = false;
+          },
+          error: (e) => {
+            this.isLoading = false;
+            this.currency = null;
+            this.isError = true;
+            console.error(e);
+          },
+        })
+    );
+  }
+
+  onRefreshCard() {
+    this.loadCurrency();
   }
 }

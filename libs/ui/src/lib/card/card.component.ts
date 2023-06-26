@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Currency } from '@freterapido/model';
 
 @Component({
@@ -14,7 +14,13 @@ export class CardComponent {
   isLoading!: boolean;
 
   @Input()
+  isError!: boolean;
+
+  @Input()
   currency!: Currency | null;
+
+  @Output()
+  cardClick = new EventEmitter();
 
   priceColor(): string {
     const price = this.currency?.value ?? 0;
@@ -27,5 +33,9 @@ export class CardComponent {
     }
 
     return 'green';
+  }
+
+  onClick() {
+    this.cardClick.emit();
   }
 }
