@@ -59,30 +59,35 @@ export class CurrencyCardComponent implements OnInit, OnDestroy {
         .pipe(take(1))
         .subscribe({
           next: (data: RequestCurrency) => {
-            const requestData = data[this.currencyCode + 'BRL'];
-            console.log(requestData);
-            const newCurrency = {
-              name: this.currencyName,
-              value: requestData.bid,
-              updateAt: new Date(),
-              variation: requestData.varBid,
-            } as Currency;
-            this.currency = newCurrency;
-            this.currencyService.setCacheCurrency(
-              this.currencyCode,
-              newCurrency
-            );
-            this.isLoading = false;
-            this.isError = false;
+            this.setNewCurrency(data, false);
           },
           error: (e) => {
-            this.isLoading = false;
-            this.currency = null;
-            this.isError = true;
+            this.setNewCurrency({}, true);
             console.error(e);
           },
         })
     );
+  }
+
+  setNewCurrency(data: RequestCurrency, isError: boolean) {
+    this.isLoading = false;
+    if (isError) {
+      this.currency = null;
+      this.isError = true;
+      return;
+    }
+
+    const requestData = data[this.currencyCode + 'BRL'];
+    const newCurrency = {
+      name: this.currencyName,
+      value: requestData.bid,
+      updateAt: new Date(),
+      variation: requestData.varBid,
+    } as Currency;
+    this.currency = newCurrency;
+    this.currencyService.setCacheCurrency(this.currencyCode, newCurrency);
+    this.isLoading = false;
+    this.isError = false;
   }
 
   onRefreshCard() {

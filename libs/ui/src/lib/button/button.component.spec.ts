@@ -18,4 +18,11 @@ describe('ButtonComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit event when button is clicked', () => {
+    const spy = jest.spyOn(component.buttonClick, 'emit');
+    fixture.nativeElement.querySelector('button').click();
+
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });

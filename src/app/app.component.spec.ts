@@ -1,28 +1,19 @@
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { UiModule } from '@freterapido/ui';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent, NxWelcomeComponent],
+      imports: [RouterTestingModule, UiModule],
+      declarations: [AppComponent],
     }).compileComponents();
   });
 
-  it('should render title', () => {
+  it(`should render header'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome freterapido'
-    );
-  });
-
-  it(`should have as title 'freterapido'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('freterapido');
+    const compiled = fixture.debugElement.nativeElement;
+    expect(compiled.querySelector('freterapido-header')).toBeTruthy();
   });
 });
